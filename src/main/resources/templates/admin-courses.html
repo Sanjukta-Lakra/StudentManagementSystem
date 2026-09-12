@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Course Management</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .admin-navbar {
+            width: 100%;
+            background: #172554;
+            padding: 15px 35px;
+            color: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .admin-title {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .admin-subtitle {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-top: 3px;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar-buttons a {
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .dashboard-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .dashboard-btn:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .students-btn {
+            background: #334155;
+            color: white;
+        }
+
+        .students-btn:hover {
+            background: #475569;
+            color: white;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .main-container {
+            width: 92%;
+            max-width: 1150px;
+
+            margin: 30px auto;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 22px;
+
+            gap: 15px;
+        }
+
+        .page-title {
+            margin: 0;
+
+            font-size: 27px;
+            font-weight: 700;
+
+            color: #172554;
+        }
+
+        .page-description {
+            margin: 5px 0 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* ================= ADD COURSE ================= */
+
+        .add-course-btn {
+            background: #2563eb;
+            color: white;
+
+            padding: 9px 16px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.3s;
+        }
+
+        .add-course-btn:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-card {
+            width: 100%;
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .course-table {
+            width: 100%;
+
+            min-width: 900px;
+
+            margin: 0;
+        }
+
+        .course-table thead th {
+            background: #172554;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 13px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+        .course-table tbody td {
+            padding: 12px 13px;
+
+            vertical-align: middle;
+
+            font-size: 14px;
+
+            color: #334155;
+        }
+
+        .course-table tbody tr {
+            transition: 0.2s;
+        }
+
+        .course-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* ================= COURSE NAME ================= */
+
+        .course-name {
+            font-weight: 600;
+            color: #172554;
+        }
+
+        /* ================= DESCRIPTION ================= */
+
+        .description {
+            min-width: 250px;
+            max-width: 350px;
+
+            line-height: 1.5;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status-badge {
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            background: #16a34a;
+
+            color: white;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .action-buttons {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            white-space: nowrap;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 6px 12px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+
+            color: white;
+
+            border: none;
+
+            padding: 6px 12px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+
+            color: white;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 35px !important;
+
+            color: #64748b !important;
+
+            font-size: 16px;
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-btn {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 9px 18px;
+
+            border: 1px solid #2563eb;
+
+            border-radius: 7px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        /* ================= TABLE ID ================= */
+
+        .course-id {
+            font-weight: 600;
+
+            color: #2563eb;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .admin-navbar {
+                padding: 13px 18px;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 12px;
+            }
+
+            .navbar-buttons {
+                width: 100%;
+            }
+
+            .navbar-buttons a {
+                flex: 1;
+
+                text-align: center;
+            }
+
+            .main-container {
+                width: 95%;
+
+                margin: 20px auto;
+
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .add-course-btn {
+                text-align: center;
+
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .admin-title {
+                font-size: 18px;
+            }
+
+            .navbar-buttons {
+                flex-direction: column;
+            }
+
+            .main-container {
+                width: 96%;
+
+                padding: 14px;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="admin-navbar">
+
+    <div>
+
+        <div class="admin-title">
+            🎓 Student Management System
+        </div>
+
+        <div class="admin-subtitle">
+            Administrator Panel
+        </div>
+
+    </div>
+
+
+    <div class="navbar-buttons">
+
+        <a href="/admin/dashboard"
+           class="dashboard-btn">
+            🏠 Dashboard
+        </a>
+
+        <a href="/admin/students"
+           class="students-btn">
+            👨‍🎓 Manage Students
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1 class="page-title">
+                📚 Manage Course
+            </h1>
+
+            <p class="page-description">
+                Add, update and manage available courses
+            </p>
+
+        </div>
+
+
+        <a href="/admin/courses/add"
+           class="add-course-btn">
+
+            + Add Course
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= TABLE ================= -->
+
+    <div class="table-card">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover course-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Course</th>
+
+                    <th>Description</th>
+
+                    <th>Duration</th>
+
+                    <th>Fees</th>
+
+                    <th>Mode</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- COURSE ROWS -->
+
+                <tr th:each="course : ${courses}">
+
+
+                    <!-- ID -->
+
+                    <td class="course-id"
+                        th:text="${course.id}">
+
+                        1
+
+                    </td>
+
+
+                    <!-- COURSE -->
+
+                    <td class="course-name"
+                        th:text="${course.courseName}">
+
+                        Java Full Stack
+
+                    </td>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <td class="description"
+                        th:text="${course.description}">
+
+                        Core Java, Spring Boot,
+                        Hibernate, MySQL,
+                        HTML, CSS and JavaScript
+
+                    </td>
+
+
+                    <!-- DURATION -->
+
+                    <td th:text="${course.duration}">
+
+                        6 Months
+
+                    </td>
+
+
+                    <!-- FEES -->
+
+                    <td>
+
+                        ₹<span th:text="${course.fees}">
+                            35000
+                        </span>
+
+                    </td>
+
+
+                    <!-- MODE -->
+
+                    <td th:text="${course.mode}">
+
+                        Offline
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status-badge"
+                              th:text="${course.status}">
+
+                            Active
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <div class="action-buttons">
+
+
+                            <!-- EDIT -->
+
+                            <a th:href="@{/admin/courses/edit/{id}(id=${course.id})}"
+                               class="edit-btn">
+
+                                Edit
+
+                            </a>
+
+
+                            <!-- DELETE -->
+
+                            <a th:href="@{/admin/courses/delete/{id}(id=${course.id})}"
+                               class="delete-btn"
+                               onclick="return confirm('Are you sure you want to delete this course?');">
+
+                                Delete
+
+                            </a>
+
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- NO COURSES -->
+
+                <tr th:if="${#lists.isEmpty(courses)}">
+
+                    <td colspan="8"
+                        class="empty-message">
+
+                        📚 No courses available.
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK TO DASHBOARD -->
+
+    <div class="text-center">
+
+        <a href="/admin/dashboard"
+           class="back-btn">
+
+            🏠 Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

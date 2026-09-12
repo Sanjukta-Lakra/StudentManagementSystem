@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Available Courses</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+        }
+
+        .course-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            height: 100%;
+        }
+
+        .course-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .course-icon {
+            font-size: 50px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-primary">
+
+    <div class="container">
+
+        <a class="navbar-brand"
+           href="/student/dashboard">
+
+            🎓 Student Management System
+
+        </a>
+
+        <a href="/student/dashboard"
+           class="btn btn-light btn-sm">
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container py-5">
+
+
+    <div class="text-center mb-5">
+
+        <h1>
+            📚 Available Courses
+        </h1>
+
+        <p class="text-muted">
+            Choose the right course for your career
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            th:each="course : ${courses}">
+
+
+            <div class="card course-card">
+
+                <div class="card-body p-4">
+
+
+                    <div class="course-icon mb-3">
+                        🎓
+                    </div>
+
+
+                    <h3
+                        th:text="${course.courseName}">
+
+                        Java Full Stack
+
+                    </h3>
+
+
+                    <p
+                        class="text-muted"
+                        th:text="${course.description}">
+
+                        Course description
+
+                    </p>
+
+
+                    <hr>
+
+
+                    <div class="mb-2">
+
+                        <strong>
+                            ⏱ Duration:
+                        </strong>
+
+                        <span
+                            th:text="${course.duration}">
+
+                            6 Months
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-2">
+
+                        <strong>
+                            💻 Mode:
+                        </strong>
+
+                        <span
+                            th:text="${course.mode}">
+
+                            Online
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <strong>
+                            💰 Fees:
+                        </strong>
+
+                        <span class="price">
+
+                            ₹<span
+                                th:text="${course.fees}">
+                                35000
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        class="badge bg-success"
+                        th:text="${course.status}">
+
+                        Active
+
+                    </span>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
