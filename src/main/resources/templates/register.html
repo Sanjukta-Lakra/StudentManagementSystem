@@ -544,12 +544,7 @@
             method="post">
 
 
-            <!-- CSRF TOKEN -->
-
-            <input
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}">
+            
 
 
             <!-- FULL NAME -->
@@ -686,7 +681,6 @@
                     name="password"
                     class="form-control"
                     placeholder="Enter your password"
-                    minlength="8"
                     autocomplete="new-password"
                     required>
 
