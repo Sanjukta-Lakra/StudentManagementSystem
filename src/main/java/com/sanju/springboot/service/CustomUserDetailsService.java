@@ -14,21 +14,17 @@ public class CustomUserDetailsService implements UserDetailsService
 {
     private final StudentRepository studentRepository;
 
-    public CustomUserDetailsService(StudentRepository studentRepository) 
+    public CustomUserDetailsService(StudentRepository studentRepository)
     {
         this.studentRepository = studentRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException 
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
     {
-        Student student = studentRepository
-                .findByEmail(email)
+        Student student = studentRepository.findByEmail(email)
                 .orElseThrow(() ->
-                    new UsernameNotFoundException(
-                        "User not found: " + email
-                    )
-                );
+                    new UsernameNotFoundException("Student not found with email: " + email));
 
         return User.builder()
                 .username(student.getEmail())

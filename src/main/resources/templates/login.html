@@ -539,83 +539,46 @@
              LOGIN FORM
         ========================= -->
 
-        <form
-            th:action="@{/login}"
-            method="post">
+        <form th:action="@{/login}" method="post">
 
+    <div class="form-group">
+        <label for="email" class="form-label">
+            Email Address
+        </label>
 
-            
+        <input
+            id="email"
+            type="email"
+            name="email"
+            class="form-control"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required>
+    </div>
 
+    <div class="form-group">
+        <label for="password" class="form-label">
+            Password
+        </label>
 
-            <!-- =========================
-                 EMAIL
-            ========================= -->
+        <input
+            id="password"
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required>
+    </div>
 
-            <div class="form-group">
+    <button
+        type="submit"
+        class="login-btn"
+        id="loginButton">
+        Login
+    </button>
 
-                <label
-                    for="email"
-                    class="form-label">
-
-                    Email Address
-
-                </label>
-
-
-                <input
-                    id="email"
-                    type="email"
-                    name="username"
-                    class="form-control"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                    required>
-
-            </div>
-
-
-            <!-- =========================
-                 PASSWORD
-            ========================= -->
-
-            <div class="form-group">
-
-                <label
-                    for="password"
-                    class="form-label">
-
-                    Password
-
-                </label>
-
-
-                <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    required>
-
-            </div>
-
-
-            <!-- =========================
-                 LOGIN BUTTON
-            ========================= -->
-
-            <button
-                type="submit"
-                class="login-btn"
-                id="loginButton">
-
-                Login
-
-            </button>
-
-
-        </form>
+</form>
 
 
         <!-- =========================
