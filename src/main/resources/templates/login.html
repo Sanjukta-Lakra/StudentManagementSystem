@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -8,17 +8,22 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Student Login</title>
+    <title>Student Management System | Login</title>
 
     <!-- Bootstrap 5 -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
     <style>
 
         /* =========================
-           GLOBAL
+           GENERAL
         ========================= */
 
         * {
@@ -28,30 +33,298 @@
         body {
             margin: 0;
             min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
 
-            background: linear-gradient(
-                135deg,
-                #eff6ff,
-                #f8fafc
-            );
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #dbeafe 0%,
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #eef5ff
+                );
 
-            font-family: Arial, sans-serif;
+            color: #172554;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .login-container {
+
+            min-height: 100vh;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            padding: 20px;
+            padding: 35px 20px;
+        }
+
+
+        .login-wrapper {
+
+            width: 100%;
+            max-width: 1050px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 420px;
+
+            gap: 55px;
+
+            align-items: center;
         }
 
 
         /* =========================
-           LOGIN CONTAINER
+           LEFT SECTION
         ========================= */
 
-        .login-container {
-            width: 100%;
-            max-width: 430px;
+        .welcome-section {
+
+            padding: 10px;
+        }
+
+
+        .brand {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 24px;
+
+            box-shadow:
+                0 8px 18px
+                rgba(37, 99, 235, 0.25);
+        }
+
+
+        .brand-name {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #1e3a8a;
+        }
+
+
+        .welcome-section h1 {
+
+            font-size: 38px;
+
+            line-height: 1.2;
+
+            font-weight: 750;
+
+            color: #172554;
+
+            margin-bottom: 18px;
+        }
+
+
+        .welcome-section h1 span {
+
+            color: #2563eb;
+        }
+
+
+        .welcome-description {
+
+            max-width: 540px;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            color: #64748b;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================
+           INFO BOX
+        ========================= */
+
+        .info-box {
+
+            max-width: 540px;
+
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.75);
+
+            border: 1px solid #dbeafe;
+
+            box-shadow:
+                0 12px 30px
+                rgba(30, 64, 175, 0.06);
+        }
+
+
+        .info-box-content {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+
+        .info-icon {
+
+            width: 55px;
+            height: 55px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 26px;
+        }
+
+
+        .info-box h5 {
+
+            margin: 0 0 5px;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            color: #1e293b;
+        }
+
+
+        .info-box p {
+
+            margin: 0;
+
+            font-size: 14px;
+
+            color: #64748b;
+        }
+
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-top: 22px;
+
+            max-width: 540px;
+        }
+
+
+        .feature-card {
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 15px;
+
+            padding: 18px 10px;
+
+            text-align: center;
+
+            transition: all 0.25s ease;
+        }
+
+
+        .feature-card:hover {
+
+            transform: translateY(-4px);
+
+            border-color: #bfdbfe;
+
+            box-shadow:
+                0 10px 22px
+                rgba(37, 99, 235, 0.10);
+        }
+
+
+        .feature-icon {
+
+            width: 42px;
+            height: 42px;
+
+            margin: auto auto 9px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 20px;
+        }
+
+
+        .feature-card span {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #475569;
         }
 
 
@@ -61,75 +334,45 @@
 
         .login-card {
 
-            background: white;
+            background: rgba(255, 255, 255, 0.94);
 
-            border: none;
+            border: 1px solid #e2e8f0;
 
-            border-radius: 18px;
+            border-radius: 22px;
 
-            padding: 35px;
+            padding: 38px;
 
             box-shadow:
-                0 10px 35px rgba(15, 23, 42, 0.10);
-
-            width: 100%;
+                0 20px 50px
+                rgba(15, 23, 42, 0.10);
         }
 
 
-        /* =========================
-           LOGO
-        ========================= */
+        .login-header {
 
-        .login-logo {
-
-            width: 70px;
-            height: 70px;
-
-            margin: 0 auto 15px;
-
-            border-radius: 50%;
-
-            background: #2563eb;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            font-size: 34px;
-
-            box-shadow:
-                0 5px 15px rgba(37, 99, 235, 0.25);
+            margin-bottom: 28px;
         }
 
 
-        /* =========================
-           TITLE
-        ========================= */
+        .login-header h2 {
 
-        .login-title {
-
-            text-align: center;
-
-            color: #172554;
-
-            font-size: 27px;
+            font-size: 28px;
 
             font-weight: 700;
 
-            margin-bottom: 6px;
+            color: #172554;
+
+            margin-bottom: 7px;
         }
 
 
-        .login-subtitle {
+        .login-header p {
 
-            text-align: center;
-
-            color: #64748b;
+            margin: 0;
 
             font-size: 14px;
 
-            margin-bottom: 25px;
+            color: #64748b;
         }
 
 
@@ -139,13 +382,11 @@
 
         .alert {
 
-            border-radius: 9px;
+            border-radius: 10px;
 
-            font-size: 14px;
+            font-size: 13px;
 
-            padding: 11px 13px;
-
-            margin-bottom: 18px;
+            padding: 11px 14px;
         }
 
 
@@ -153,46 +394,177 @@
            FORM
         ========================= */
 
-        .form-group {
-
-            margin-bottom: 18px;
-        }
-
-
         .form-label {
-
-            color: #334155;
 
             font-size: 14px;
 
             font-weight: 600;
 
-            margin-bottom: 7px;
+            color: #334155;
+
+            margin-bottom: 8px;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+            margin-bottom: 20px;
+        }
+
+
+        .input-wrapper i.input-icon {
+
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 18px;
+
+            z-index: 5;
         }
 
 
         .form-control {
 
-            min-height: 48px;
+            height: 54px;
 
-            border: 1px solid #cbd5e1;
+            border: 1px solid #dbe3ef;
 
-            border-radius: 9px;
+            border-radius: 12px;
 
-            font-size: 15px;
+            background: #f8fafc;
 
-            padding: 10px 13px;
+            padding-left: 48px;
+
+            padding-right: 45px;
+
+            font-size: 14px;
+
+            color: #1e293b;
 
             transition: 0.2s;
         }
 
 
+        .form-control::placeholder {
+
+            color: #94a3b8;
+        }
+
+
         .form-control:focus {
 
-            border-color: #2563eb;
+            background: white;
+
+            border-color: #60a5fa;
 
             box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.12);
+                0 0 0 4px
+                rgba(37, 99, 235, 0.10);
+        }
+
+
+        /* =========================
+           PASSWORD BUTTON
+        ========================= */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            padding: 5px;
+        }
+
+
+        .password-toggle:hover {
+
+            color: #2563eb;
+        }
+
+
+        /* =========================
+           LOGIN OPTIONS
+        ========================= */
+
+        .login-options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin: 4px 0 25px;
+        }
+
+
+        .remember-label {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 13px;
+
+            color: #64748b;
+
+            cursor: pointer;
+        }
+
+
+        .remember-label input {
+
+            width: 16px;
+
+            height: 16px;
+
+            accent-color: #2563eb;
+        }
+
+
+        .forgot-link {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #2563eb;
+
+            text-decoration: none;
+        }
+
+
+        .forgot-link:hover {
+
+            color: #1d4ed8;
+
+            text-decoration: underline;
         }
 
 
@@ -204,11 +576,11 @@
 
             width: 100%;
 
-            min-height: 48px;
+            height: 54px;
 
             border: none;
 
-            border-radius: 9px;
+            border-radius: 12px;
 
             background: #2563eb;
 
@@ -218,13 +590,19 @@
 
             font-weight: 600;
 
-            cursor: pointer;
+            display: flex;
 
-            transition: 0.3s;
+            align-items: center;
 
-            margin-top: 5px;
+            justify-content: center;
 
-            display: block;
+            gap: 10px;
+
+            transition: all 0.25s ease;
+
+            box-shadow:
+                0 8px 18px
+                rgba(37, 99, 235, 0.22);
         }
 
 
@@ -232,70 +610,51 @@
 
             background: #1d4ed8;
 
-            transform: translateY(-1px);
+            transform: translateY(-2px);
 
             box-shadow:
-                0 5px 12px rgba(37, 99, 235, 0.20);
+                0 12px 22px
+                rgba(37, 99, 235, 0.28);
         }
 
 
-        .login-btn:active {
+        .login-btn i {
 
-            transform: translateY(0);
-        }
-
-
-        .login-btn:disabled {
-
-            cursor: not-allowed;
-
-            opacity: 0.7;
-
-            transform: none;
+            font-size: 18px;
         }
 
 
         /* =========================
-           REGISTER SECTION
+           REGISTER
         ========================= */
 
         .register-section {
 
             text-align: center;
 
-            margin-top: 22px;
+            margin-top: 23px;
 
-            padding-top: 18px;
+            padding-top: 20px;
 
-            border-top: 1px solid #e2e8f0;
-        }
+            border-top: 1px solid #edf2f7;
 
-
-        .register-text {
+            font-size: 13px;
 
             color: #64748b;
-
-            font-size: 14px;
-
-            margin-bottom: 7px;
         }
 
 
-        .register-link {
+        .register-section a {
 
             color: #2563eb;
 
+            font-weight: 700;
+
             text-decoration: none;
-
-            font-size: 14px;
-
-            font-weight: 600;
         }
 
 
-        .register-link:hover {
-
-            color: #1d4ed8;
+        .register-section a:hover {
 
             text-decoration: underline;
         }
@@ -309,11 +668,11 @@
 
             text-align: center;
 
+            margin-top: 18px;
+
+            font-size: 11px;
+
             color: #94a3b8;
-
-            font-size: 12px;
-
-            margin-top: 20px;
         }
 
 
@@ -321,21 +680,67 @@
            TABLET
         ========================= */
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
 
-            body {
+            .login-wrapper {
 
-                padding: 18px;
+                max-width: 600px;
+
+                grid-template-columns: 1fr;
             }
+
+
+            .welcome-section {
+
+                text-align: center;
+            }
+
+
+            .brand {
+
+                justify-content: center;
+            }
+
+
+            .welcome-section h1 {
+
+                font-size: 32px;
+            }
+
+
+            .welcome-description {
+
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
+
+            .info-box {
+
+                margin-left: auto;
+
+                margin-right: auto;
+
+                text-align: left;
+            }
+
+
+            .features {
+
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
 
             .login-card {
 
-                padding: 30px;
-            }
+                width: 100%;
 
-            .login-title {
+                max-width: 420px;
 
-                font-size: 25px;
+                margin: auto;
             }
         }
 
@@ -344,113 +749,65 @@
            MOBILE
         ========================= */
 
-        @media (max-width: 480px) {
-
-            body {
-
-                padding: 15px;
-
-                align-items: center;
-            }
-
+        @media (max-width: 576px) {
 
             .login-container {
 
-                max-width: 100%;
+                padding: 20px 15px;
+            }
+
+
+            .welcome-section {
+
+                display: none;
             }
 
 
             .login-card {
 
-                padding: 25px 20px;
+                padding: 30px 24px;
 
-                border-radius: 15px;
+                border-radius: 18px;
             }
 
 
-            .login-logo {
+            .login-header h2 {
 
-                width: 60px;
-
-                height: 60px;
-
-                font-size: 29px;
-
-                margin-bottom: 13px;
+                font-size: 25px;
             }
 
 
-            .login-title {
+            .login-options {
 
-                font-size: 23px;
+                gap: 10px;
             }
 
 
-            .login-subtitle {
+            .forgot-link {
 
-                font-size: 13px;
-
-                margin-bottom: 21px;
+                font-size: 12px;
             }
-
-
-            .form-control {
-
-                min-height: 46px;
-
-                font-size: 14px;
-            }
-
-
-            .login-btn {
-
-                min-height: 46px;
-
-                font-size: 14px;
-            }
-
-
-            .alert {
-
-                font-size: 13px;
-            }
-
         }
 
 
         /* =========================
-           VERY SMALL MOBILE
+           VERY SMALL SCREEN
         ========================= */
 
         @media (max-width: 360px) {
 
-            body {
-
-                padding: 10px;
-            }
-
-
             .login-card {
 
-                padding: 22px 16px;
+                padding: 25px 18px;
             }
 
 
-            .login-title {
+            .login-options {
 
-                font-size: 21px;
+                flex-direction: column;
+
+                align-items: flex-start;
             }
-
-
-            .login-logo {
-
-                width: 55px;
-
-                height: 55px;
-
-                font-size: 26px;
-            }
-
         }
 
     </style>
@@ -461,184 +818,378 @@
 <body>
 
 
-<!-- =========================
-     LOGIN CONTAINER
-========================= -->
-
 <div class="login-container">
 
-
-    <!-- LOGIN CARD -->
-
-    <div class="login-card">
+    <div class="login-wrapper">
 
 
-        <!-- LOGO -->
+        <!-- =====================================
+             LEFT SIDE
+        ====================================== -->
 
-        <div class="login-logo">
-
-            🎓
-
-        </div>
+        <section class="welcome-section">
 
 
-        <!-- TITLE -->
+            <!-- BRAND -->
 
-        <h1 class="login-title">
+            <div class="brand">
 
-            Student Login
+                <div class="brand-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
 
-        </h1>
-
-
-        <p class="login-subtitle">
-
-            Welcome back! Please login to continue.
-
-        </p>
-
-
-        <!-- =========================
-             ERROR MESSAGE
-        ========================= -->
-
-        <div th:if="${param.error}"
-             class="alert alert-danger">
-
-            ⚠️ Invalid Email or Password!
-
-        </div>
-
-
-        <!-- =========================
-             LOGOUT MESSAGE
-        ========================= -->
-
-        <div th:if="${param.logout}"
-             class="alert alert-success">
-
-            ✅ Successfully Logged Out!
-
-        </div>
-
-
-        <!-- =========================
-             REGISTRATION SUCCESS
-        ========================= -->
-
-        <div th:if="${success}"
-             class="alert alert-success"
-             th:text="${success}">
-
-            Registration Successful! Please login.
-
-        </div>
-
-
-        <!-- =========================
-             LOGIN FORM
-        ========================= -->
-
-        <form th:action="@{/login}" method="post">
-
-    <div class="form-group">
-        <label for="email" class="form-label">
-            Email Address
-        </label>
-
-        <input
-            id="email"
-            type="email"
-            name="email"
-            class="form-control"
-            placeholder="Enter your email"
-            autocomplete="email"
-            required>
-    </div>
-
-    <div class="form-group">
-        <label for="password" class="form-label">
-            Password
-        </label>
-
-        <input
-            id="password"
-            type="password"
-            name="password"
-            class="form-control"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required>
-    </div>
-
-    <button
-        type="submit"
-        class="login-btn"
-        id="loginButton">
-        Login
-    </button>
-
-</form>
-
-
-        <!-- =========================
-             REGISTER
-        ========================= -->
-
-        <div class="register-section">
-
-            <div class="register-text">
-
-                Don't have an account?
+                <div class="brand-name">
+                    Student Management System
+                </div>
 
             </div>
 
 
-            <a
-                th:href="@{/register}"
-                class="register-link">
+            <!-- TITLE -->
 
-                Create New Student Account →
+            <h1>
 
-            </a>
+                Manage your
+                <span>academic journey</span>
+                with ease.
 
-        </div>
+            </h1>
 
+
+            <p class="welcome-description">
+
+                A simple and secure platform to manage
+                student information, courses and academic
+                details from one place.
+
+            </p>
+
+
+            <!-- INFO -->
+
+            <div class="info-box">
+
+                <div class="info-box-content">
+
+                    <div class="info-icon">
+
+                        <i class="bi bi-grid-1x2-fill"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Everything in one place
+                        </h5>
+
+                        <p>
+                            Access your profile, courses and
+                            academic information quickly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="features">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+                    <span>
+                        Students
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-book-half"></i>
+
+                    </div>
+
+                    <span>
+                        Courses
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-bar-chart-fill"></i>
+
+                    </div>
+
+                    <span>
+                        Progress
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             LOGIN CARD
+        ====================================== -->
+
+        <section class="login-card">
+
+
+            <div class="login-header">
+
+                <h2>
+                    Welcome back 👋
+                </h2>
+
+                <p>
+                    Sign in to continue to your dashboard.
+                </p>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                th:if="${param.error}"
+                class="alert alert-danger">
+
+                <i class="bi bi-exclamation-circle me-2"></i>
+
+                Invalid email or password.
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <div
+                th:if="${param.logout}"
+                class="alert alert-success">
+
+                <i class="bi bi-check-circle me-2"></i>
+
+                You have been logged out successfully.
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                th:action="@{/login}"
+                method="post">
+
+
+                <!-- EMAIL -->
+
+                <label
+                    for="email"
+                    class="form-label">
+
+                    Email Address
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-envelope input-icon"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <label
+                    for="password"
+                    class="form-label">
+
+                    Password
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="bi bi-lock input-icon"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword()"
+                        aria-label="Show password">
+
+                        <i
+                            class="bi bi-eye"
+                            id="eyeIcon">
+                        </i>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- OPTIONS -->
+
+                <div class="login-options">
+
+
+                    <label class="remember-label">
+
+                        <input
+                            type="checkbox"
+                            name="remember-me">
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+
+                    <a
+                        href="#"
+                        class="forgot-link">
+
+                        Forgot password?
+
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-btn">
+
+                    <span>
+                        Sign In
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- REGISTER -->
+
+            <div class="register-section">
+
+                Don't have an account?
+
+                <a th:href="@{/register}">
+                    Create an account
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="login-footer">
+
+                © 2026 Student Management System
+
+            </div>
+
+
+        </section>
 
     </div>
-
-
-    <!-- =========================
-         FOOTER
-    ========================= -->
-
-    <div class="login-footer">
-
-        Student Management System
-
-    </div>
-
 
 </div>
 
 
-<!-- =========================
-     LOGIN SCRIPT
-========================= -->
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
 
 <script>
 
-    document.querySelector("form")
-        .addEventListener("submit", function() {
+    function togglePassword() {
 
-            const button =
-                document.getElementById("loginButton");
+        const password =
+            document.getElementById("password");
 
-            button.disabled = true;
+        const eyeIcon =
+            document.getElementById("eyeIcon");
 
-            button.textContent = "Logging in...";
 
-        });
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            eyeIcon.classList.remove("bi-eye");
+
+            eyeIcon.classList.add("bi-eye-slash");
+
+        }
+
+        else {
+
+            password.type = "password";
+
+            eyeIcon.classList.remove("bi-eye-slash");
+
+            eyeIcon.classList.add("bi-eye");
+
+        }
+
+    }
 
 </script>
 
