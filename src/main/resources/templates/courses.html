@@ -1,202 +1,483 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <title>Available Courses | Student Management System</title>
 
-    <title>Available Courses</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
 
-        body {
-            background: #f5f7fb;
+        * {
+            box-sizing: border-box;
         }
 
-        .course-card {
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+            color: #334155;
+        }
+
+        /* NAVBAR */
+        .student-navbar {
+            background: #172554;
+            padding: 14px 4%;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
+        }
+
+        .brand {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+        }
+
+        .brand:hover {
+            color: #ffffff;
+        }
+
+        .navbar-nav {
+            align-items: center;
+            gap: 5px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 9px 13px !important;
+            border-radius: 6px;
+            transition: 0.25s;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #ffffff;
+            background: #334155;
+        }
+
+        .logout-btn {
+            background: #ffffff;
+            color: #172554;
             border: none;
-            border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: 0.3s;
+            border-radius: 6px;
+            padding: 9px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .logout-btn:hover {
+            background: #e2e8f0;
+            color: #172554;
+        }
+
+        /* MAIN CONTAINER */
+        .courses-container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        /* WELCOME SECTION */
+        .welcome-section {
+            background: linear-gradient(120deg, #172554, #2563eb);
+            border-radius: 14px;
+            padding: 35px 38px;
+            color: #ffffff;
+            margin-bottom: 28px;
+            box-shadow: 0 7px 20px rgba(37, 99, 235, 0.14);
+        }
+
+        .welcome-title {
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .welcome-description {
+            color: #dbeafe;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            color: #172554;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
+
+        /* COURSE CARDS */
+        .course-card {
             height: 100%;
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            transition: 0.25s;
         }
 
         .course-card:hover {
-            transform: translateY(-7px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
         }
 
-        .course-icon {
-            font-size: 50px;
+        .course-card .card-body {
+            padding: 25px;
         }
 
-        .price {
-            font-size: 22px;
-            font-weight: bold;
+        .course-name {
+            color: #172554;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .course-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 48px;
+            margin-bottom: 18px;
+        }
+
+        .course-divider {
+            border-color: #e5eaf2;
+            margin: 18px 0;
+            opacity: 1;
+        }
+
+        .course-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #64748b;
+        }
+
+        .detail-value {
+            color: #334155;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .course-price {
+            color: #2563eb;
+            font-size: 19px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* COURSE STATUS */
+        .course-status {
+            display: inline-block;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .course-status.inactive {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* EMPTY MESSAGE */
+        .empty-message {
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 40px 20px;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+        }
+
+        .empty-message h5 {
+            color: #334155;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-message p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* FOOTER */
+        .dashboard-footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 28px 10px 18px;
+        }
+
+        /* TABLET */
+        @media (max-width: 991px) {
+
+            .navbar-nav {
+                align-items: stretch;
+                padding-top: 12px;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 10px !important;
+            }
+
+            .logout-btn {
+                width: 100%;
+                margin-top: 8px;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 576px) {
+
+            .courses-container {
+                width: 92%;
+                margin: 22px auto;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .welcome-section {
+                padding: 25px 21px;
+                margin-bottom: 23px;
+            }
+
+            .welcome-title {
+                font-size: 23px;
+            }
+
+            .welcome-description {
+                font-size: 13px;
+            }
+
+            .course-card .card-body {
+                padding: 20px;
+            }
+
+            .course-name {
+                font-size: 19px;
+            }
+
+            .course-description {
+                min-height: auto;
+            }
         }
 
     </style>
-
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark student-navbar">
 
-<!-- NAVBAR -->
+        <div class="container-fluid">
 
-<nav class="navbar navbar-dark bg-primary">
+            <a th:href="@{/student/dashboard}" class="brand">
+                Student Management System
+            </a>
 
-    <div class="container">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#studentNavbar"
+                    aria-controls="studentNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
 
-        <a class="navbar-brand"
-           href="/student/dashboard">
+                <span class="navbar-toggler-icon"></span>
 
-            🎓 Student Management System
+            </button>
 
-        </a>
+            <div class="collapse navbar-collapse" id="studentNavbar">
 
-        <a href="/student/dashboard"
-           class="btn btn-light btn-sm">
+                <ul class="navbar-nav ms-auto">
 
-            Dashboard
+                    <li class="nav-item">
+                        <a th:href="@{/student/dashboard}"
+                           class="nav-link">
+                            Dashboard
+                        </a>
+                    </li>
 
-        </a>
+                    <li class="nav-item">
+                        <a th:href="@{/courses}"
+                           class="nav-link active">
+                            Available Courses
+                        </a>
+                    </li>
 
-    </div>
+                    <li class="nav-item">
+                        <a th:href="@{/student/attendance}"
+                           class="nav-link">
+                            My Attendance
+                        </a>
+                    </li>
 
-</nav>
+                    <li class="nav-item ms-lg-2">
+                        <form th:action="@{/logout}" method="post">
 
+                            <button type="submit" class="logout-btn">
+                                Logout
+                            </button>
 
-<div class="container py-5">
+                        </form>
+                    </li>
 
+                </ul>
 
-    <div class="text-center mb-5">
+            </div>
+        </div>
+    </nav>
 
-        <h1>
-            📚 Available Courses
-        </h1>
+    <!-- MAIN CONTENT -->
+    <main class="courses-container">
 
-        <p class="text-muted">
-            Choose the right course for your career
-        </p>
+        <!-- WELCOME SECTION -->
+        <section class="welcome-section">
 
-    </div>
+            <h1 class="welcome-title">
+                Available Courses
+            </h1>
 
+            <p class="welcome-description">
+                Explore our courses and take the next step towards your career.
+            </p>
 
-    <div class="row g-4">
+        </section>
 
+        <!-- COURSE LIST -->
+        <section>
 
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            th:each="course : ${courses}">
+            <h2 class="section-heading">
+                Explore Courses
+            </h2>
 
+            <div class="row g-4">
 
-            <div class="card course-card">
+                <div class="col-12 col-md-6 col-lg-4"
+                     th:each="course : ${courses}">
 
-                <div class="card-body p-4">
+                    <div class="card course-card">
 
+                        <div class="card-body">
 
-                    <div class="course-icon mb-3">
-                        🎓
-                    </div>
+                            <h3 class="course-name"
+                                th:text="${course.courseName}">
+                                Java Full Stack
+                            </h3>
 
+                            <p class="course-description"
+                               th:text="${course.description}">
+                                Course description
+                            </p>
 
-                    <h3
-                        th:text="${course.courseName}">
+                            <hr class="course-divider">
 
-                        Java Full Stack
+                            <div class="course-detail">
 
-                    </h3>
+                                <span class="detail-label">
+                                    Duration
+                                </span>
 
+                                <span class="detail-value"
+                                      th:text="${course.duration}">
+                                    6 Months
+                                </span>
 
-                    <p
-                        class="text-muted"
-                        th:text="${course.description}">
+                            </div>
 
-                        Course description
+                            <div class="course-detail">
 
-                    </p>
+                                <span class="detail-label">
+                                    Mode
+                                </span>
 
+                                <span class="detail-value"
+                                      th:text="${course.mode}">
+                                    Online
+                                </span>
 
-                    <hr>
+                            </div>
 
+                            <div class="course-detail">
 
-                    <div class="mb-2">
+                                <span class="detail-label">
+                                    Course Fees
+                                </span>
 
-                        <strong>
-                            ⏱ Duration:
-                        </strong>
+                                <span class="course-price">
+                                    ₹<span th:text="${course.fees}">
+                                        35000
+                                    </span>
+                                </span>
 
-                        <span
-                            th:text="${course.duration}">
+                            </div>
 
-                            6 Months
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="mb-2">
-
-                        <strong>
-                            💻 Mode:
-                        </strong>
-
-                        <span
-                            th:text="${course.mode}">
-
-                            Online
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <strong>
-                            💰 Fees:
-                        </strong>
-
-                        <span class="price">
-
-                            ₹<span
-                                th:text="${course.fees}">
-                                35000
+                            <!-- ACTIVE / INACTIVE STATUS -->
+                            <span class="course-status"
+                                  th:classappend="${course.status != null and #strings.equalsIgnoreCase(course.status.toString(), 'inactive')} ? ' inactive' : ''"
+                                  th:text="${course.status}">
+                                Active
                             </span>
 
-                        </span>
-
+                        </div>
                     </div>
-
-
-                    <span
-                        class="badge bg-success"
-                        th:text="${course.status}">
-
-                        Active
-
-                    </span>
-
-
                 </div>
 
             </div>
 
-        </div>
+            <!-- EMPTY MESSAGE -->
+            <div class="empty-message text-center mt-4"
+                 th:if="${#lists.isEmpty(courses)}">
 
-    </div>
+                <h5>
+                    No courses available at the moment.
+                </h5>
 
-</div>
+                <p>
+                    Please check again later.
+                </p>
 
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            Student Management System | Student Panel
+        </footer>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
 
 </body>
-
 </html>

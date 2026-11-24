@@ -1,5 +1,7 @@
 package com.sanju.springboot.entity;
 
+import com.sanju.springboot.enums.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

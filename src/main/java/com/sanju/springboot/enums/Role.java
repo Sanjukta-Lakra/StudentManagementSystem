@@ -1,4 +1,4 @@
-package com.sanju.springboot.entity;
+package com.sanju.springboot.enums;
 
 public enum Role 
 {

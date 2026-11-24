@@ -1,26 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Edit Student | Student Management System</title>
 
-    <title>Edit Student</title>
-
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
-
-        /* =========================
-           GLOBAL
-        ========================= */
-
         * {
             box-sizing: border-box;
         }
@@ -28,587 +18,276 @@
         body {
             margin: 0;
             min-height: 100vh;
-
-            background: linear-gradient(
-                135deg,
-                #eff6ff,
-                #f8fafc
-            );
-
-            font-family: Arial, sans-serif;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             padding: 25px 15px;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+            color: #334155;
         }
-
-
-        /* =========================
-           MAIN CONTAINER
-        ========================= */
 
         .edit-container {
             width: 100%;
-            max-width: 600px;
-            margin: auto;
+            max-width: 560px;
         }
-
-
-        /* =========================
-           EDIT CARD
-        ========================= */
 
         .edit-card {
-            background: #ffffff;
-
-            border-radius: 16px;
-
-            padding: 28px;
-
             width: 100%;
-
-            box-shadow:
-                0 8px 25px rgba(15, 23, 42, 0.10);
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.06);
         }
-
-
-        /* =========================
-           TITLE
-        ========================= */
 
         .title {
             color: #172554;
-
-            font-size: 28px;
-
+            font-size: 27px;
             font-weight: 700;
-
-            margin-bottom: 25px;
-
             text-align: center;
+            margin-bottom: 28px;
         }
-
-
-        /* =========================
-           FORM GROUP
-        ========================= */
 
         .form-group {
-            margin-bottom: 17px;
+            margin-bottom: 19px;
         }
-
-
-        /* =========================
-           LABEL
-        ========================= */
 
         .form-label {
+            display: block;
             color: #334155;
-
-            font-weight: 600;
-
             font-size: 14px;
-
-            margin-bottom: 6px;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
-
-
-        /* =========================
-           INPUT & SELECT
-        ========================= */
 
         .form-control,
         .form-select {
-
-            min-height: 44px;
-
-            border-radius: 8px;
-
-            border: 1px solid #cbd5e1;
-
+            width: 100%;
+            min-height: 48px;
+            border: 1px solid #dbe3ef;
+            border-radius: 7px;
+            background-color: #ffffff;
+            padding: 10px 13px;
             font-size: 14px;
-
-            padding: 8px 12px;
-
-            transition: 0.2s;
+            color: #334155;
         }
 
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
 
         .form-control:focus,
         .form-select:focus {
-
-            border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.12);
+            border-color: #647ba8;
+            box-shadow: 0 0 0 3px rgba(23, 37, 84, 0.08);
         }
-
 
         .form-select {
             cursor: pointer;
         }
 
-
-        /* =========================
-           BUTTON ROW
-        ========================= */
-
         .button-row {
-
             display: flex;
-
-            gap: 10px;
-
-            margin-top: 22px;
+            gap: 12px;
+            margin-top: 27px;
         }
-
-
-        /* =========================
-           BUTTONS
-        ========================= */
 
         .update-btn,
         .cancel-btn {
-
-            min-height: 44px;
-
-            padding: 8px 18px;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-
-            font-weight: 600;
-
+            flex: 1;
+            min-height: 48px;
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
-            transition: 0.3s;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease;
         }
-
-
-        /* =========================
-           UPDATE BUTTON
-        ========================= */
 
         .update-btn {
-
-            background: #2563eb;
-
-            border-color: #2563eb;
-
-            color: white;
+            background: #172554;
+            border: 1px solid #172554;
+            color: #ffffff;
         }
-
 
         .update-btn:hover {
-
-            background: #1d4ed8;
-
-            border-color: #1d4ed8;
-
-            color: white;
-
-            transform: translateY(-1px);
-
-            box-shadow:
-                0 4px 10px rgba(37, 99, 235, 0.20);
+            background: #243b72;
+            border-color: #243b72;
+            color: #ffffff;
         }
-
-
-        /* =========================
-           CANCEL BUTTON
-        ========================= */
 
         .cancel-btn {
-
-            background: #64748b;
-
-            border-color: #64748b;
-
-            color: white;
-
-            text-decoration: none;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #475569;
         }
-
 
         .cancel-btn:hover {
-
-            background: #475569;
-
-            border-color: #475569;
-
-            color: white;
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #172554;
         }
-
-
-        /* =========================
-           TABLET
-        ========================= */
-
-        @media (max-width: 768px) {
-
-            body {
-                padding: 20px 15px;
-            }
-
-            .edit-container {
-                max-width: 560px;
-            }
-
-            .edit-card {
-                padding: 25px;
-            }
-
-            .title {
-                font-size: 26px;
-            }
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
 
         @media (max-width: 576px) {
-
             body {
-
-                padding: 15px 10px;
-
-                align-items: center;
+                padding: 18px 12px;
             }
-
-
-            .edit-container {
-
-                max-width: 100%;
-            }
-
 
             .edit-card {
-
-                padding: 22px 18px;
-
-                border-radius: 14px;
+                padding: 27px 22px;
             }
-
 
             .title {
-
-                font-size: 23px;
-
-                margin-bottom: 21px;
+                font-size: 24px;
+                margin-bottom: 23px;
             }
-
 
             .form-group {
-
-                margin-bottom: 15px;
+                margin-bottom: 16px;
             }
-
-
-            .form-label {
-
-                font-size: 13px;
-            }
-
-
-            .form-control,
-            .form-select {
-
-                min-height: 43px;
-
-                font-size: 13px;
-
-                padding: 8px 11px;
-            }
-
 
             .button-row {
-
                 flex-direction: column;
-
-                gap: 9px;
-
-                margin-top: 20px;
+                gap: 10px;
+                margin-top: 22px;
             }
-
 
             .update-btn,
             .cancel-btn {
-
                 width: 100%;
-
-                min-height: 44px;
-
-                font-size: 13px;
+                flex: auto;
             }
         }
 
-
-        /* =========================
-           SMALL MOBILE
-        ========================= */
-
-        @media (max-width: 360px) {
-
-            body {
-
-                padding: 10px 8px;
-            }
-
-
+        @media (max-width: 350px) {
             .edit-card {
-
-                padding: 20px 15px;
-
-                border-radius: 13px;
+                padding: 23px 17px;
             }
-
 
             .title {
-
-                font-size: 21px;
-
-                margin-bottom: 19px;
-            }
-
-
-            .form-control,
-            .form-select {
-
-                min-height: 42px;
-
-                font-size: 13px;
-            }
-
-
-            .update-btn,
-            .cancel-btn {
-
-                min-height: 43px;
-
-                font-size: 13px;
+                font-size: 22px;
             }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <div class="edit-container">
+
+        <div class="edit-card">
+
+            <h1 class="title">Edit Student</h1>
+
+            <form th:action="@{/admin/students/update/{id}(id=${student.id})}"
+                  method="post">
 
-<!-- =========================
-     MAIN CONTAINER
-========================= -->
+                <!-- Full Name -->
+                <div class="form-group">
 
-<div class="edit-container">
+                    <label for="name" class="form-label">
+                        Full Name
+                    </label>
 
+                    <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        th:value="${student.name}"
+                        placeholder="Enter full name"
+                        required>
 
-    <!-- =========================
-         EDIT CARD
-    ========================= -->
+                </div>
 
-    <div class="edit-card">
+                <!-- Email -->
+                <div class="form-group">
 
+                    <label for="email" class="form-label">
+                        Email Address
+                    </label>
 
-        <!-- TITLE -->
+                    <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        th:value="${student.email}"
+                        placeholder="Enter email address"
+                        required>
 
-        <h1 class="title">
+                </div>
 
-            Edit Student
+                <!-- Phone -->
+                <div class="form-group">
 
-        </h1>
+                    <label for="phone" class="form-label">
+                        Phone Number
+                    </label>
 
+                    <input
+                        id="phone"
+                        type="tel"
+                        name="phone"
+                        class="form-control"
+                        th:value="${student.phone}"
+                        maxlength="10"
+                        pattern="[6-9][0-9]{9}"
+                        placeholder="Enter 10-digit phone number"
+                        required>
 
-        <!-- =========================
-             FORM
-        ========================= -->
+                </div>
 
-        <form
-            th:action="@{/admin/students/update/{id}(id=${student.id})}"
-            method="post">
+                <!-- Course -->
+                <div class="form-group">
 
+                    <label for="course" class="form-label">
+                        Select Course
+                    </label>
 
-            
-            <!-- =========================
-                 FULL NAME
-            ========================= -->
+                    <select
+                        id="course"
+                        name="course"
+                        class="form-select"
+                        required>
 
-            <div class="form-group">
+                        <option value="">
+                            -- Select Course --
+                        </option>
 
-                <label
-                    for="name"
-                    class="form-label">
+                        <option
+                            th:each="course : ${courses}"
+                            th:value="${course.courseName}"
+                            th:text="${course.courseName}"
+                            th:selected="${course.courseName == student.course}">
+                        </option>
 
-                    Full Name
+                    </select>
 
-                </label>
+                </div>
 
+                <!-- Buttons -->
+                <div class="button-row">
 
-                <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    class="form-control"
-                    th:value="${student.name}"
-                    placeholder="Enter full name"
-                    required>
+                    <button type="submit" class="update-btn">
+                        Update Student
+                    </button>
 
-            </div>
+                    <a th:href="@{/admin/students}"
+                       class="cancel-btn">
+                        Cancel
+                    </a>
 
+                </div>
 
-            <!-- =========================
-                 EMAIL
-            ========================= -->
+            </form>
 
-            <div class="form-group">
-
-                <label
-                    for="email"
-                    class="form-label">
-
-                    Email Address
-
-                </label>
-
-
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    th:value="${student.email}"
-                    placeholder="Enter email address"
-                    required>
-
-            </div>
-
-
-            <!-- =========================
-                 PHONE
-            ========================= -->
-
-            <div class="form-group">
-
-                <label
-                    for="phone"
-                    class="form-label">
-
-                    Phone Number
-
-                </label>
-
-
-                <input
-                    id="phone"
-                    type="tel"
-                    name="phone"
-                    class="form-control"
-                    th:value="${student.phone}"
-                    maxlength="10"
-                    pattern="[6-9][0-9]{9}"
-                    placeholder="Enter 10-digit phone number"
-                    required>
-
-            </div>
-
-
-            <!-- =========================
-                 COURSE
-            ========================= -->
-
-            <div class="form-group">
-
-                <label
-                    for="course"
-                    class="form-label">
-
-                    Select Course
-
-                </label>
-
-
-                <select
-                    id="course"
-                    name="course"
-                    class="form-select"
-                    required>
-
-
-                    <!-- DEFAULT -->
-
-                    <option value="">
-
-                        -- Select Course --
-
-                    </option>
-
-
-                    <!-- ALL COURSES FROM DATABASE -->
-
-                    <option
-                        th:each="course : ${courses}"
-                        th:value="${course.courseName}"
-                        th:text="${course.courseName}"
-                        th:selected="${course.courseName == student.course}">
-
-                    </option>
-
-
-                </select>
-
-            </div>
-
-
-            <!-- =========================
-                 BUTTONS
-            ========================= -->
-
-            <div class="button-row">
-
-
-                <!-- UPDATE BUTTON -->
-
-                <button
-                    type="submit"
-                    class="btn update-btn">
-
-                    Update Student
-
-                </button>
-
-
-                <!-- CANCEL BUTTON -->
-
-                <a
-                    th:href="@{/admin/students}"
-                    class="btn cancel-btn">
-
-                    Cancel
-
-                </a>
-
-
-            </div>
-
-
-        </form>
-
+        </div>
 
     </div>
 
-</div>
-
-
 </body>
-
 </html>

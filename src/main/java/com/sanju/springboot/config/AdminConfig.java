@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.sanju.springboot.entity.Role;
 import com.sanju.springboot.entity.Student;
+import com.sanju.springboot.enums.Role;
 import com.sanju.springboot.repository.StudentRepository;
 
 @Configuration

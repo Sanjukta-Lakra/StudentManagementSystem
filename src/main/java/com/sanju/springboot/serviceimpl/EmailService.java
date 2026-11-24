@@ -1,4 +1,4 @@
-package com.sanju.springboot.service;
+package com.sanju.springboot.serviceimpl;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

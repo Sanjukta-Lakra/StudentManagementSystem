@@ -1,13 +1,14 @@
-package com.sanju.springboot.service;
+package com.sanju.springboot.serviceimpl;
 
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sanju.springboot.entity.Role;
 import com.sanju.springboot.entity.Student;
+import com.sanju.springboot.enums.Role;
 import com.sanju.springboot.repository.StudentRepository;
+import com.sanju.springboot.service.StudentService;
 
 @Service
 public class StudentServiceImpl implements StudentService

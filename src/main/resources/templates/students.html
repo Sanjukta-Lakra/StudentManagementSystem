@@ -1,489 +1,562 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Manage Students</title>
+    <title>Manage Students | Student Management System</title>
 
     <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            min-height: 100vh;
             background: #f4f7fb;
             font-family: Arial, sans-serif;
+            color: #334155;
         }
 
-        /* ================= NAVBAR ================= */
-
+        /* NAVBAR */
         .admin-navbar {
-            width: 100%;
             background: #172554;
-            padding: 15px 35px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
+            padding: 14px 4%;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .navbar-nav {
             align-items: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            gap: 5px;
         }
 
-        .admin-title {
-            font-size: 21px;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .admin-subtitle {
-            font-size: 13px;
+        .navbar-nav .nav-link {
             color: #cbd5e1;
-            margin-top: 3px;
-        }
-
-        .navbar-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .navbar-buttons a {
-            text-decoration: none;
-            padding: 9px 16px;
-            border-radius: 8px;
             font-size: 14px;
             font-weight: 500;
-            transition: 0.3s;
+            padding: 9px 13px !important;
+            border-radius: 6px;
+            transition: 0.25s;
         }
 
-        .dashboard-btn {
-            background: #2563eb;
-            color: white;
-        }
-
-        .dashboard-btn:hover {
-            background: #1d4ed8;
-            color: white;
-        }
-
-        .course-btn {
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #ffffff;
             background: #334155;
-            color: white;
         }
 
-        .course-btn:hover {
-            background: #475569;
-            color: white;
+        .logout-btn {
+            background: #ffffff;
+            color: #172554;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
         }
 
-        /* ================= MAIN AREA ================= */
-
-        .main-container {
-            width: 92%;
-            max-width: 1150px;
-            margin: 30px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
-        }
-
-        /* ================= HEADER ================= */
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 22px;
-            gap: 15px;
-        }
-
-        .page-title {
-            margin: 0;
-            font-size: 27px;
-            font-weight: 700;
+        .logout-btn:hover {
+            background: #e2e8f0;
             color: #172554;
         }
 
-        .page-description {
-            margin: 5px 0 0;
-            color: #64748b;
-            font-size: 14px;
+        /* MAIN CONTAINER */
+        .dashboard-container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
         }
 
-        /* ================= TABLE ================= */
+        /* WELCOME SECTION */
+        .welcome-section {
+            background: linear-gradient(120deg, #172554, #2563eb);
+            border-radius: 14px;
+            padding: 35px 38px;
+            color: white;
+            margin-bottom: 28px;
+            box-shadow: 0 7px 20px rgba(37, 99, 235, 0.14);
+        }
+
+        .welcome-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #dbeafe;
+            margin-bottom: 12px;
+        }
+
+        .welcome-title {
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .welcome-description {
+            color: #dbeafe;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            color: #172554;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
+
+        /* TABLE CARD */
+        .table-card {
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+        }
 
         .table-container {
             width: 100%;
             overflow-x: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
         }
 
+        /* TABLE */
         .student-table {
             width: 100%;
-            min-width: 850px;
-            margin: 0;
+            min-width: 0;
+            table-layout: fixed;
+            border-collapse: collapse;
+            margin-bottom: 0;
         }
 
         .student-table thead th {
-            background: #172554;
-            color: white;
-            border: none;
-            padding: 12px 14px;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .student-table tbody td {
-            padding: 12px 14px;
-            font-size: 14px;
+            background: #f1f5f9;
             color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 14px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
             vertical-align: middle;
         }
 
-        .student-table tbody tr {
-            transition: 0.2s;
+        .student-table tbody td {
+            color: #475569;
+            font-size: 13px;
+            padding: 14px 8px;
+            border-bottom: 1px solid #edf0f5;
+            vertical-align: middle;
+        }
+
+        .student-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         .student-table tbody tr:hover {
             background: #f8fafc;
         }
 
-        /* ================= ID ================= */
+        /* COLUMN ALIGNMENT */
 
+        /* ID */
+        .student-table th:nth-child(1),
+        .student-table td:nth-child(1) {
+            text-align: center;
+        }
+
+        /* NAME */
+        .student-table th:nth-child(2),
+        .student-table td:nth-child(2) {
+            text-align: left;
+            padding-left: 12px;
+        }
+
+        /* EMAIL */
+        .student-table th:nth-child(3),
+        .student-table td:nth-child(3) {
+            text-align: left;
+            padding-left: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        /* PHONE */
+        .student-table th:nth-child(4),
+        .student-table td:nth-child(4) {
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* COURSE */
+        .student-table th:nth-child(5),
+        .student-table td:nth-child(5) {
+            text-align: left;
+            padding-left: 12px;
+            overflow-wrap: break-word;
+        }
+
+        /* ACTIONS */
+        .student-table th:nth-child(6),
+        .student-table td:nth-child(6) {
+            text-align: center;
+        }
+
+        /* STUDENT ID */
         .student-id {
             font-weight: 600;
             color: #2563eb !important;
         }
 
-        /* ================= COURSE ================= */
-
-        .course-name {
-        font-weight: 400;
-        color: #334155;
+        /* STUDENT NAME */
+        .student-name {
+            font-weight: 600;
+            color: #172554 !important;
         }
 
-        /* ================= ACTION BUTTONS ================= */
+        /* COURSE NAME */
+        .course-name {
+            color: #334155;
+        }
 
+        /* ACTION BUTTONS */
         .action-buttons {
             display: flex;
-            gap: 7px;
-            white-space: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.25s;
         }
 
         .edit-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 7px 13px;
-            border-radius: 6px;
-            font-size: 13px;
-            text-decoration: none;
+            background: #e0e7ff;
+            color: #3730a3;
         }
 
         .edit-btn:hover {
-            background: #1d4ed8;
-            color: white;
+            background: #c7d2fe;
+            color: #312e81;
         }
 
         .delete-btn {
-            background: #dc2626;
-            color: white;
-            border: none;
-            padding: 7px 13px;
-            border-radius: 6px;
-            font-size: 13px;
-            text-decoration: none;
+            background: #fee2e2;
+            color: #dc2626;
         }
 
         .delete-btn:hover {
-            background: #b91c1c;
-            color: white;
+            background: #fecaca;
+            color: #b91c1c;
         }
 
-        /* ================= EMPTY ================= */
-
+        /* EMPTY STATE */
         .no-students {
-            text-align: center;
+            text-align: center !important;
             padding: 35px !important;
             color: #64748b !important;
-            font-size: 16px;
-        }
-
-        /* ================= BOTTOM BUTTON ================= */
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 9px 18px;
-            border: 1px solid #2563eb;
-            border-radius: 7px;
-            color: #2563eb;
-            text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-            transition: 0.3s;
         }
 
-        .back-btn:hover {
-            background: #2563eb;
-            color: white;
+        /* FOOTER */
+        .dashboard-footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 28px 10px 18px;
         }
 
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 768px) {
-
-            .admin-navbar {
-                padding: 13px 18px;
-                flex-direction: column;
+        /* TABLET */
+        @media (max-width: 991px) {
+            .navbar-nav {
                 align-items: stretch;
-                gap: 12px;
+                padding-top: 12px;
             }
 
-            .navbar-buttons {
+            .navbar-nav .nav-link {
+                padding: 10px !important;
+            }
+
+            .logout-btn {
                 width: 100%;
+                margin-top: 8px;
             }
 
-            .navbar-buttons a {
-                flex: 1;
-                text-align: center;
+            .student-table {
+                min-width: 850px;
             }
-
-            .main-container {
-                width: 95%;
-                margin: 20px auto;
-                padding: 18px;
-            }
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .page-title {
-                font-size: 24px;
-            }
-
         }
 
-        @media (max-width: 480px) {
-
-            .admin-title {
-                font-size: 18px;
+        /* MOBILE */
+        @media (max-width: 576px) {
+            .dashboard-container {
+                width: 92%;
+                margin: 22px auto;
             }
 
-            .navbar-buttons {
-                flex-direction: column;
+            .navbar-brand {
+                font-size: 17px;
             }
 
-            .main-container {
-                width: 96%;
+            .welcome-section {
+                padding: 25px 21px;
+                margin-bottom: 23px;
+            }
+
+            .welcome-title {
+                font-size: 23px;
+            }
+
+            .welcome-description {
+                font-size: 13px;
+            }
+
+            .table-card {
                 padding: 14px;
             }
 
-            .page-title {
-                font-size: 22px;
+            .student-table {
+                min-width: 850px;
             }
 
+            .action-buttons {
+                gap: 6px;
+            }
         }
-
     </style>
-
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar">
 
-<div class="admin-navbar">
+        <div class="container-fluid">
 
-    <div>
-        <div class="admin-title">
-            🎓 Student Management System
+            <a class="navbar-brand" th:href="@{/admin/dashboard}">
+                Student Management System
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#adminNavbar"
+                    aria-controls="adminNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div class="collapse navbar-collapse" id="adminNavbar">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/admin/dashboard}">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           th:href="@{/admin/students}">
+                            Students
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/admin/courses}">
+                            Courses
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/admin/attendance}">
+                            Attendance
+                        </a>
+                    </li>
+
+                    <li class="nav-item ms-lg-2">
+
+                        <form th:action="@{/logout}" method="post">
+
+                            <button type="submit" class="logout-btn">
+                                Logout
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
         </div>
 
-        <div class="admin-subtitle">
-            Administrator Panel
-        </div>
-    </div>
+    </nav>
 
-    <div class="navbar-buttons">
+    <!-- STUDENTS CONTENT -->
+    <main class="dashboard-container">
 
-        <a href="/admin/dashboard"
-           class="dashboard-btn">
-            🏠 Dashboard
-        </a>
+        <!-- WELCOME SECTION -->
+        <section class="welcome-section">
 
-        <a href="/admin/courses"
-           class="course-btn">
-            📚 Manage Course 
-        </a>
+            <div class="welcome-label">
+                ADMINISTRATOR PANEL
+            </div>
 
-    </div>
-
-</div>
-
-
-<!-- ================= MAIN CONTAINER ================= -->
-
-<div class="main-container">
-
-    <!-- HEADER -->
-
-    <div class="page-header">
-
-        <div>
-
-            <h1 class="page-title">
-                👨‍🎓 Manage Students
+            <h1 class="welcome-title">
+                Manage Students
             </h1>
 
-            <p class="page-description">
-                View, update and manage registered students
+            <p class="welcome-description">
+                View, update and manage all registered student records
+                from one place.
             </p>
 
-        </div>
+        </section>
 
-    </div>
+        <!-- STUDENT TABLE -->
+        <section>
 
+            <h2 class="section-heading">
+                Registered Students
+            </h2>
 
-    <!-- ================= STUDENT TABLE ================= -->
+            <div class="table-card">
 
-    <div class="table-container">
+                <div class="table-container">
 
-        <table class="table table-hover student-table">
+                    <table class="table table-hover student-table">
 
-            <thead>
+                        <colgroup>
+                            <col style="width: 7%">
+                            <col style="width: 17%">
+                            <col style="width: 25%">
+                            <col style="width: 15%">
+                            <col style="width: 18%">
+                            <col style="width: 18%">
+                        </colgroup>
 
-            <tr>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Course</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
 
-                <th>ID</th>
+                        <tbody>
 
-                <th>Name</th>
+                            <!-- STUDENT RECORDS -->
+                            <tr th:each="student : ${students}">
 
-                <th>Email</th>
+                                <td class="student-id"
+                                    th:text="${student.id}">
+                                    1
+                                </td>
 
-                <th>Phone</th>
+                                <td class="student-name"
+                                    th:text="${student.name}">
+                                    Student Name
+                                </td>
 
-                <th>Course</th>
+                                <td th:text="${student.email}">
+                                    student@gmail.com
+                                </td>
 
-                <th>Actions</th>
+                                <td th:text="${student.phone}">
+                                    9876543210
+                                </td>
 
-            </tr>
+                                <td class="course-name"
+                                    th:text="${student.course}">
+                                    Java Full Stack
+                                </td>
 
-            </thead>
+                                <td>
 
+                                    <div class="action-buttons">
 
-            <tbody>
+                                        <!-- EDIT -->
+                                        <a th:href="@{/admin/students/edit/{id}(id=${student.id})}"
+                                           class="edit-btn">
+                                            Edit
+                                        </a>
 
-            <!-- STUDENTS -->
+                                        <!-- DELETE -->
+                                        <a th:href="@{/admin/students/delete/{id}(id=${student.id})}"
+                                           class="delete-btn"
+                                           onclick="return confirm('Are you sure you want to delete this student?');">
+                                            Delete
+                                        </a>
 
-            <tr th:each="student : ${students}">
+                                    </div>
 
-                <td class="student-id"
-                    th:text="${student.id}">
-                    1
-                </td>
+                                </td>
 
-                <td th:text="${student.name}">
-                    Student Name
-                </td>
+                            </tr>
 
-                <td th:text="${student.email}">
-                    student@gmail.com
-                </td>
+                            <!-- EMPTY STATE -->
+                            <tr th:if="${#lists.isEmpty(students)}">
 
-                <td th:text="${student.phone}">
-                    9876543210
-                </td>
+                                <td colspan="6" class="no-students">
+                                    No students enrolled yet.
+                                </td>
 
-                <td class="course-name"
-                    th:text="${student.course}">
-                    Java Full Stack
-                </td>
+                            </tr>
 
-                <td>
+                        </tbody>
 
-                    <div class="action-buttons">
+                    </table>
 
-                        <!-- EDIT -->
+                </div>
 
-                        <a th:href="@{/admin/students/edit/{id}(id=${student.id})}"
-                           class="edit-btn">
-                            Edit
-                        </a>
+            </div>
 
-                        <!-- DELETE -->
+        </section>
 
-                        <a th:href="@{/admin/students/delete/{id}(id=${student.id})}"
-                           class="delete-btn"
-                           onclick="return confirm('Are you sure you want to delete this student?');">
-                            Delete
-                        </a>
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            Student Management System | Admin Panel
+        </footer>
 
-                    </div>
+    </main>
 
-                </td>
-
-            </tr>
-
-
-            <!-- NO STUDENTS -->
-
-            <tr th:if="${#lists.isEmpty(students)}">
-
-                <td colspan="6"
-                    class="no-students">
-
-                    👨‍🎓 No students enrolled yet.
-
-                </td>
-
-            </tr>
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <!-- BACK BUTTON -->
-
-    <div class="text-center">
-
-        <a href="/admin/dashboard"
-           class="back-btn">
-
-            🏠 Back to Dashboard
-
-        </a>
-
-    </div>
-
-</div>
-
-
-<!-- Bootstrap JS -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>

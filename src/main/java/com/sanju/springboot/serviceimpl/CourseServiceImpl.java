@@ -1,4 +1,4 @@
-package com.sanju.springboot.service;
+package com.sanju.springboot.serviceimpl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sanju.springboot.entity.Course;
 import com.sanju.springboot.repository.CourseRepository;
+import com.sanju.springboot.service.CourseService;
 
 @Service
 public class CourseServiceImpl implements CourseService

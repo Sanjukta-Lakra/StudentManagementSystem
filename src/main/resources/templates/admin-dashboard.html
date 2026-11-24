@@ -1,504 +1,515 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Student Management System</title>
 
-    <title>Admin Dashboard</title>
-
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            min-height: 100vh;
             background: #f4f7fb;
             font-family: Arial, sans-serif;
+            color: #334155;
         }
 
-        /* ================= NAVBAR ================= */
-
+        /* NAVBAR */
         .admin-navbar {
-            width: 100%;
             background: #172554;
-            padding: 15px 35px;
+            padding: 14px 4%;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
+        }
 
-            color: white;
+        .navbar-brand {
+            color: #ffffff !important;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
 
-            display: flex;
-            justify-content: space-between;
+        .navbar-nav {
             align-items: center;
-
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            gap: 5px;
         }
 
-        .admin-title {
-            font-size: 21px;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .admin-subtitle {
-            font-size: 13px;
+        .navbar-nav .nav-link {
             color: #cbd5e1;
-            margin-top: 3px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 9px 13px !important;
+            border-radius: 6px;
+            transition: 0.25s;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #ffffff;
+            background: #334155;
         }
 
         .logout-btn {
-            background: #334155;
-            color: white;
-
+            background: #ffffff;
+            color: #172554;
             border: none;
-
-            padding: 9px 16px;
-
-            border-radius: 8px;
-
+            border-radius: 6px;
+            padding: 9px 18px;
             font-size: 14px;
-            font-weight: 500;
-
-            transition: 0.3s;
+            font-weight: 600;
+            transition: 0.25s;
         }
 
         .logout-btn:hover {
-            background: #475569;
+            background: #e2e8f0;
+            color: #172554;
         }
 
-        /* ================= MAIN CONTAINER ================= */
-
-        .main-container {
+        /* MAIN CONTAINER */
+        .dashboard-container {
             width: 92%;
-            max-width: 1150px;
-
-            margin: 30px auto;
-
-            background: white;
-
-            padding: 30px;
-
-            border-radius: 14px;
-
-            box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
+            max-width: 1250px;
+            margin: 35px auto;
         }
 
-        /* ================= WELCOME ================= */
-
+        /* WELCOME SECTION */
         .welcome-section {
-            text-align: center;
+            background: linear-gradient(120deg, #172554, #2563eb);
+            border-radius: 14px;
+            padding: 35px 38px;
+            color: white;
+            margin-bottom: 28px;
+            box-shadow: 0 7px 20px rgba(37, 99, 235, 0.14);
+        }
 
-            padding: 10px 0 25px;
+        .welcome-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #dbeafe;
+            margin-bottom: 12px;
         }
 
         .welcome-title {
-            color: #172554;
-
-            font-size: 30px;
-
+            font-size: 27px;
             font-weight: 700;
-
-            margin-bottom: 7px;
+            margin-bottom: 9px;
         }
 
-        .welcome-text {
-            color: #64748b;
-
-            font-size: 15px;
-
+        .welcome-description {
+            color: #dbeafe;
+            font-size: 14px;
             margin: 0;
+            line-height: 1.7;
         }
 
-        /* ================= STAT CARDS ================= */
+        /* SECTION HEADING */
+        .section-heading {
+            color: #172554;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
 
-        .stats-row {
+        /* STATISTICS */
+        .stats-grid {
             display: grid;
-
             grid-template-columns: repeat(2, 1fr);
-
             gap: 20px;
-
-            margin: 15px 0 30px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
-            background: #f8fafc;
-
-            border: 1px solid #e2e8f0;
-
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
             border-radius: 12px;
-
-            padding: 22px;
-
-            text-align: center;
-
-            transition: 0.3s;
+            padding: 24px 26px;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            transition: 0.25s;
         }
 
         .stat-card:hover {
             transform: translateY(-3px);
-
-            box-shadow: 0 7px 18px rgba(15, 23, 42, 0.08);
-        }
-
-        .stat-icon {
-            font-size: 30px;
-
-            margin-bottom: 8px;
-        }
-
-        .stat-number {
-            font-size: 28px;
-
-            font-weight: 700;
-
-            color: #2563eb;
-
-            margin: 0;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
         }
 
         .stat-label {
             color: #64748b;
-
             font-size: 14px;
-
-            margin-top: 4px;
+            font-weight: 500;
+            margin-bottom: 10px;
         }
 
-        /* ================= MANAGEMENT ================= */
-
-        .section-title {
-            text-align: center;
-
-            color: #172554;
-
-            font-size: 21px;
-
-            font-weight: 600;
-
-            margin-bottom: 18px;
+        .stat-number {
+            color: #2563eb;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
         }
 
+        .stat-bottom {
+            display: none;
+        }
+
+        /* MANAGEMENT */
         .management-grid {
             display: grid;
-
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 18px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .management-card {
-            background: #f8fafc;
-
-            border: 1px solid #e2e8f0;
-
-            border-radius: 11px;
-
-            padding: 22px;
-
-            text-align: center;
-
+            display: block;
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 25px;
+            min-height: 165px;
             text-decoration: none;
-
             color: #172554;
-
-            transition: 0.3s;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            transition: 0.25s;
         }
 
         .management-card:hover {
-            background: #eff6ff;
-
+            transform: translateY(-4px);
             border-color: #2563eb;
-
-            transform: translateY(-3px);
-
+            box-shadow: 0 9px 22px rgba(37, 99, 235, 0.10);
             color: #172554;
         }
 
-        .management-icon {
-            font-size: 32px;
-
-            margin-bottom: 10px;
+        .card-number {
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 17px;
         }
 
         .management-title {
             font-size: 17px;
-
-            font-weight: 600;
-
-            margin-bottom: 5px;
+            font-weight: 700;
+            margin-bottom: 9px;
         }
 
         .management-description {
-            font-size: 13px;
-
             color: #64748b;
-
+            font-size: 13px;
+            line-height: 1.6;
             margin: 0;
         }
 
-        /* ================= FOOTER ================= */
-
-        .dashboard-footer {
-            text-align: center;
-
-            margin-top: 28px;
-
-            color: #94a3b8;
-
+        .card-link {
+            display: inline-block;
+            color: #2563eb;
             font-size: 13px;
+            font-weight: 600;
+            margin-top: 16px;
         }
 
-        /* ================= MOBILE ================= */
+        /* FOOTER */
+        .dashboard-footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 28px 10px 18px;
+        }
 
-        @media (max-width: 768px) {
-
-            .admin-navbar {
-                padding: 13px 18px;
-
-                flex-direction: column;
-
+        /* TABLET */
+        @media (max-width: 991px) {
+            .navbar-nav {
                 align-items: stretch;
+                padding-top: 12px;
+            }
 
-                gap: 12px;
+            .navbar-nav .nav-link {
+                padding: 10px !important;
             }
 
             .logout-btn {
                 width: 100%;
-            }
-
-            .main-container {
-                width: 95%;
-
-                margin: 20px auto;
-
-                padding: 20px;
-            }
-
-            .welcome-title {
-                font-size: 26px;
-            }
-
-            .stats-row {
-                grid-template-columns: 1fr;
+                margin-top: 8px;
             }
 
             .management-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
-
         }
 
-        @media (max-width: 480px) {
-
-            .admin-title {
-                font-size: 18px;
+        /* MOBILE */
+        @media (max-width: 576px) {
+            .dashboard-container {
+                width: 92%;
+                margin: 22px auto;
             }
 
-            .main-container {
-                width: 96%;
+            .navbar-brand {
+                font-size: 17px;
+            }
 
-                padding: 15px;
+            .welcome-section {
+                padding: 25px 21px;
+                margin-bottom: 23px;
             }
 
             .welcome-title {
                 font-size: 23px;
             }
 
+            .welcome-description {
+                font-size: 13px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 13px;
+                margin-bottom: 27px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr;
+                gap: 13px;
+            }
+
+            .management-card {
+                min-height: auto;
+                padding: 22px;
+            }
         }
-
     </style>
-
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar">
 
-<!-- ================= NAVBAR ================= -->
+        <div class="container-fluid">
 
-<div class="admin-navbar">
+            <a class="navbar-brand" th:href="@{/admin}">
+                Student Management System
+            </a>
 
-    <div>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#adminNavbar">
 
-        <div class="admin-title">
-            🎓 Student Management System
-        </div>
+                <span class="navbar-toggler-icon"></span>
 
-        <div class="admin-subtitle">
-            Administrator Panel
-        </div>
+            </button>
 
-    </div>
+            <div class="collapse navbar-collapse" id="adminNavbar">
 
+                <ul class="navbar-nav ms-auto">
 
-    <!-- LOGOUT -->
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin}">
+                            Dashboard
+                        </a>
+                    </li>
 
-    <form th:action="@{/logout}"
-          method="post"
-          style="margin: 0;">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/students}">
+                            Students
+                        </a>
+                    </li>
 
-        
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/courses}">
+                            Courses
+                        </a>
+                    </li>
 
-        <button type="submit"
-                class="logout-btn">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/attendance}">
+                            Attendance
+                        </a>
+                    </li>
 
-            🚪 Logout
+                    <li class="nav-item ms-lg-2">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="logout-btn">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
 
-        </button>
+                </ul>
 
-    </form>
-
-</div>
-
-
-<!-- ================= MAIN ================= -->
-
-<div class="main-container">
-
-
-    <!-- WELCOME -->
-
-    <div class="welcome-section">
-
-        <h1 class="welcome-title">
-            👋 Welcome, Administrator
-        </h1>
-
-        <p class="welcome-text">
-            Manage students and courses from your admin dashboard
-        </p>
-
-    </div>
-
-
-    <!-- ================= STATISTICS ================= -->
-
-    <div class="stats-row">
-
-
-        <!-- STUDENTS -->
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                👨‍🎓
-            </div>
-
-            <h2 class="stat-number"
-                th:text="${studentCount}">
-                0
-            </h2>
-
-            <div class="stat-label">
-                Total Students
             </div>
 
         </div>
 
+    </nav>
 
-        <!-- COURSES -->
+    <!-- DASHBOARD CONTENT -->
+    <main class="dashboard-container">
 
-        <div class="stat-card">
+        <!-- WELCOME -->
+        <section class="welcome-section">
 
-            <div class="stat-icon">
-                📚
+            <div class="welcome-label">
+                ADMINISTRATOR PANEL
             </div>
 
-            <h2 class="stat-number"
-                th:text="${courseCount}">
-                0
-            </h2>
+            <h1 class="welcome-title">
+                Welcome, Administrator
+            </h1>
 
-            <div class="stat-label">
-                Total Courses
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= MANAGEMENT ================= -->
-
-    <h2 class="section-title">
-        Management
-    </h2>
-
-
-    <div class="management-grid">
-
-
-        <!-- MANAGE STUDENTS -->
-
-        <a href="/admin/students"
-           class="management-card">
-
-            <div class="management-icon">
-                👨‍🎓
-            </div>
-
-            <div class="management-title">
-                Manage Students
-            </div>
-
-            <p class="management-description">
-                View, edit and delete student records
+            <p class="welcome-description">
+                Manage your students, courses and attendance records
+                efficiently from one place.
             </p>
 
-        </a>
+        </section>
 
+        <!-- STATISTICS -->
+        <section>
 
-        <!-- COURSE MANAGEMENT -->
+            <h2 class="section-heading">
+                Overview
+            </h2>
 
-        <a href="/admin/courses"
-           class="management-card">
+            <div class="stats-grid">
 
-            <div class="management-icon">
-                📚
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Total Students
+                    </div>
+
+                    <h2 class="stat-number"
+                        th:text="${studentCount}">
+                        0
+                    </h2>
+
+                    <div class="stat-bottom"></div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Total Courses
+                    </div>
+
+                    <h2 class="stat-number"
+                        th:text="${courseCount}">
+                        0
+                    </h2>
+
+                    <div class="stat-bottom"></div>
+
+                </div>
+
             </div>
 
-            <div class="management-title">
-                Manage Courses
+        </section>
+
+        <!-- MANAGEMENT -->
+        <section>
+
+            <h2 class="section-heading">
+                Management
+            </h2>
+
+            <div class="management-grid">
+
+                <!-- STUDENTS -->
+                <a th:href="@{/admin/students}"
+                   class="management-card">
+
+                    <div class="card-number">
+                        01 / STUDENTS
+                    </div>
+
+                    <h3 class="management-title">
+                        Manage Students
+                    </h3>
+
+                    <p class="management-description">
+                        View, edit and delete registered student records.
+                    </p>
+
+                    <span class="card-link">
+                        Open Students &rarr;
+                    </span>
+
+                </a>
+
+                <!-- COURSES -->
+                <a th:href="@{/admin/courses}"
+                   class="management-card">
+
+                    <div class="card-number">
+                        02 / COURSES
+                    </div>
+
+                    <h3 class="management-title">
+                        Manage Courses
+                    </h3>
+
+                    <p class="management-description">
+                        Add, edit and manage all available courses.
+                    </p>
+
+                    <span class="card-link">
+                        Open Courses &rarr;
+                    </span>
+
+                </a>
+
+                <!-- ATTENDANCE -->
+                <a th:href="@{/admin/attendance}"
+                   class="management-card">
+
+                    <div class="card-number">
+                        03 / ATTENDANCE
+                    </div>
+
+                    <h3 class="management-title">
+                        Attendance Management
+                    </h3>
+
+                    <p class="management-description">
+                        View student records and mark daily attendance.
+                    </p>
+
+                    <span class="card-link">
+                        Open Attendance &rarr;
+                    </span>
+
+                </a>
+
             </div>
 
-            <p class="management-description">
-                Add, edit and manage available courses
-            </p>
+        </section>
 
-        </a>
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            Student Management System | Admin Panel
+        </footer>
 
-    </div>
+    </main>
 
-
-    <!-- FOOTER -->
-
-    <div class="dashboard-footer">
-
-        Student Management System • Admin Panel
-
-    </div>
-
-
-</div>
-
-
-<!-- Bootstrap JS -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>

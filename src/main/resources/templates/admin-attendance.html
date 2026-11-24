@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Attendance | Student Management System</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family: Arial, sans-serif;
+            color: #334155;
+        }
+
+        /* NAVBAR */
+        .admin-navbar {
+            background: #172554;
+            padding: 14px 4%;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.12);
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .navbar-nav {
+            align-items: center;
+            gap: 5px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #cbd5e1 !important;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 9px 13px !important;
+            border-radius: 6px;
+            transition: 0.25s;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #ffffff !important;
+            background: #334155;
+        }
+
+        .logout-btn {
+            background: #ffffff;
+            color: #172554;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .logout-btn:hover {
+            background: #e2e8f0;
+            color: #172554;
+        }
+
+        /* MAIN CONTAINER */
+        .dashboard-container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        /* WELCOME SECTION */
+        .welcome-section {
+            background: linear-gradient(120deg, #172554, #2563eb);
+            border-radius: 14px;
+            padding: 35px 38px;
+            color: white;
+            margin-bottom: 28px;
+            box-shadow: 0 7px 20px rgba(37, 99, 235, 0.14);
+        }
+
+        .welcome-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            color: #dbeafe;
+            margin-bottom: 12px;
+        }
+
+        .welcome-title {
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .welcome-description {
+            color: #dbeafe;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* SECTION HEADING */
+        .section-heading {
+            color: #172554;
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
+
+        /* CONTENT CARD */
+        .content-card {
+            background: #ffffff;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .form-control,
+        .form-select {
+            min-height: 42px;
+            border: 1px solid #dbe2ea;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .view-btn {
+            background: #172554;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .view-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* TABLE */
+        .table {
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .table thead th {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 15px 12px;
+            white-space: nowrap;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table tbody td {
+            padding: 15px 12px;
+            font-size: 13px;
+            color: #475569;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        /* ATTENDANCE STATUS */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-present {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-absent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status-not-marked {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        /* ACTION */
+        .attendance-action {
+            min-width: 115px;
+        }
+
+        .save-btn {
+            background: #172554;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 13px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .save-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .empty-state {
+            padding: 35px 15px !important;
+            text-align: center;
+            color: #64748b !important;
+        }
+
+        /* FOOTER */
+        .dashboard-footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            padding: 28px 10px 18px;
+        }
+
+        /* TABLET */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                align-items: stretch;
+                padding-top: 12px;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 10px !important;
+            }
+
+            .logout-btn {
+                width: 100%;
+                margin-top: 8px;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 576px) {
+            .dashboard-container {
+                width: 92%;
+                margin: 22px auto;
+            }
+
+            .navbar-brand {
+                font-size: 17px;
+            }
+
+            .welcome-section {
+                padding: 25px 21px;
+                margin-bottom: 23px;
+            }
+
+            .welcome-title {
+                font-size: 23px;
+            }
+
+            .welcome-description {
+                font-size: 13px;
+            }
+
+            .content-card {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand" th:href="@{/admin/dashboard}">
+                Student Management System
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#adminNavbar">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="adminNavbar">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/dashboard}">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/students}">
+                            Students
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/courses}">
+                            Courses
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/admin/attendance}">
+                            Attendance
+                        </a>
+                    </li>
+
+                    <li class="nav-item ms-lg-2">
+
+                        <form th:action="@{/logout}" method="post">
+
+                            <button type="submit" class="logout-btn">
+                                Logout
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="dashboard-container">
+
+        <!-- WELCOME -->
+        <section class="welcome-section">
+
+            <div class="welcome-label">
+                ADMINISTRATOR PANEL
+            </div>
+
+            <h1 class="welcome-title">
+                Manage Attendance
+            </h1>
+
+            <p class="welcome-description">
+                View student attendance records and manage daily attendance
+                efficiently from one place.
+            </p>
+
+        </section>
+
+        <!-- ATTENDANCE MANAGEMENT -->
+        <section>
+
+            <h2 class="section-heading">
+                Attendance Records
+            </h2>
+
+            <div class="content-card">
+
+                <!-- DATE SELECTION -->
+                <form th:action="@{/admin/attendance}"
+                      method="get"
+                      class="row g-3 align-items-end mb-4">
+
+                    <div class="col-md-4">
+
+                        <label for="date" class="form-label">
+                            Select Attendance Date
+                        </label>
+
+                        <input type="date"
+                               id="date"
+                               name="date"
+                               class="form-control"
+                               th:value="${selectedDate}">
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button type="submit" class="view-btn w-100">
+                            View
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- SEARCH AND FILTER -->
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-6">
+
+                        <label for="searchInput" class="form-label">
+                            Search Student
+                        </label>
+
+                        <input type="text"
+                               id="searchInput"
+                               class="form-control"
+                               placeholder="Search by name or email">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label for="statusFilter" class="form-label">
+                            Filter by Status
+                        </label>
+
+                        <select id="statusFilter" class="form-select">
+
+                            <option value="ALL">All Students</option>
+                            <option value="PRESENT">Present</option>
+                            <option value="ABSENT">Absent</option>
+                            <option value="NOT_MARKED">Not Marked</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- ATTENDANCE TABLE -->
+                <div class="table-responsive">
+
+                    <table class="table">
+
+                        <thead>
+
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Attendance Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="attendance-record"
+                                th:each="student, iter : ${students}"
+                                th:with="studentStatus=${attendanceMap[student.id]}"
+                                th:attr="data-status=${studentStatus != null ? studentStatus.name() : 'NOT_MARKED'}">
+
+                                <td th:text="${iter.count}">1</td>
+
+                                <td class="student-name"
+                                    th:text="${student.name}">
+                                    Student Name
+                                </td>
+
+                                <td class="student-email"
+                                    th:text="${student.email}">
+                                    student@email.com
+                                </td>
+
+                                <td th:text="${student.course != null ? student.course : 'N/A'}">
+                                    Course
+                                </td>
+
+                                <td th:text="${#temporals.format(selectedDate, 'dd-MM-yyyy')}">
+                                    24-11-2026
+                                </td>
+
+                                <!-- CURRENT STATUS -->
+                                <td>
+
+                                    <span th:if="${studentStatus != null and studentStatus.name() == 'PRESENT'}"
+                                          class="status-badge status-present">
+                                        Present
+                                    </span>
+
+                                    <span th:if="${studentStatus != null and studentStatus.name() == 'ABSENT'}"
+                                          class="status-badge status-absent">
+                                        Absent
+                                    </span>
+
+                                    <span th:if="${studentStatus == null}"
+                                          class="status-badge status-not-marked">
+                                        Not Marked
+                                    </span>
+
+                                </td>
+
+                                <!-- CHANGE ATTENDANCE -->
+                                <td>
+
+                                    <form th:action="@{/admin/attendance/mark}"
+                                          method="post"
+                                          class="d-flex gap-2 align-items-center">
+
+                                        <input type="hidden"
+                                               name="studentId"
+                                               th:value="${student.id}">
+
+                                        <input type="hidden"
+                                               name="attendanceDate"
+                                               th:value="${selectedDate}">
+
+                                        <select name="status"
+                                                class="form-select form-select-sm attendance-action">
+
+                                            <option value="PRESENT"
+                                                    th:selected="${studentStatus != null and studentStatus.name() == 'PRESENT'}">
+                                                Present
+                                            </option>
+
+                                            <option value="ABSENT"
+                                                    th:selected="${studentStatus != null and studentStatus.name() == 'ABSENT'}">
+                                                Absent
+                                            </option>
+
+                                            <option value="NOT_MARKED"
+                                                    th:selected="${studentStatus == null}">
+                                                Not Marked
+                                            </option>
+
+                                        </select>
+
+                                        <button type="submit" class="save-btn">
+                                            Save
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            <tr th:if="${#lists.isEmpty(students)}">
+
+                                <td colspan="7" class="empty-state">
+                                    No students found.
+                                </td>
+
+                            </tr>
+
+                            <tr id="noResults" style="display:none;">
+
+                                <td colspan="7" class="empty-state">
+                                    No matching students found.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            Student Management System | Admin Panel
+        </footer>
+
+    </main>
+
+    <!-- SEARCH AND FILTER -->
+    <script>
+
+        const searchInput = document.getElementById("searchInput");
+        const statusFilter = document.getElementById("statusFilter");
+        const rows = document.querySelectorAll(".attendance-record");
+        const noResults = document.getElementById("noResults");
+
+        function filterStudents() {
+
+            const searchValue = searchInput.value.toLowerCase().trim();
+            const selectedStatus = statusFilter.value;
+
+            let visibleCount = 0;
+
+            rows.forEach(function(row) {
+
+                const name = row.querySelector(".student-name")
+                    .textContent.toLowerCase();
+
+                const email = row.querySelector(".student-email")
+                    .textContent.toLowerCase();
+
+                const status = row.getAttribute("data-status");
+
+                const matchesSearch =
+                    name.includes(searchValue) ||
+                    email.includes(searchValue);
+
+                const matchesStatus =
+                    selectedStatus === "ALL" ||
+                    status === selectedStatus;
+
+                if (matchesSearch && matchesStatus) {
+
+                    row.style.display = "";
+                    visibleCount++;
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+            noResults.style.display =
+                rows.length > 0 && visibleCount === 0 ? "" : "none";
+
+        }
+
+        searchInput.addEventListener("input", filterStudents);
+        statusFilter.addEventListener("change", filterStudents);
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
